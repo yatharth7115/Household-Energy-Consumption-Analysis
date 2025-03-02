@@ -1,4 +1,4 @@
-# Household-Energy-Consumption-Clustering Analysis
+# Household-Energy-Consumption-Analysis
 
 This project analyzes clustering techniques applied to various datasets to uncover hidden patterns and group similar data points. The analysis explores different clustering methods and evaluates their effectiveness in identifying meaningful clusters.  
 
