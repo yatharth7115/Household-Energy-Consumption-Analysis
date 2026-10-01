@@ -1,0 +1,4 @@
+model,clusters,noise_fraction,silhouette,davies_bouldin
+K-Means,5,0.000000,0.354341,0.944076
+Hierarchical,5,0.000000,0.328606,1.103513
+DBSCAN,5,0.018200,0.578324,1.190774

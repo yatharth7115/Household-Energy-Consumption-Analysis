@@ -4,7 +4,7 @@ An exploratory analysis of one-minute household electricity readings, followed b
 
 ## Data
 
-Download **Individual Household Electric Power Consumption** from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption). Extract `household_power_consumption.txt` into `data/` at the repository root. The data is not committed to Git. UCI credits Georges Hebrail and Alice Berard and licenses the dataset under CC BY 4.0.
+Download **Individual Household Electric Power Consumption** from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption) with `python scripts/download_data.py`. It extracts `household_power_consumption.txt` into `data/` at the repository root. The data is not committed to Git. UCI credits Georges Hebrail and Alice Berard and licenses the dataset under CC BY 4.0.
 
 The dataset contains minute readings from December 2006 to November 2010. `Global_active_power` is in kW; sub-metering fields are in Wh per minute. The code calculates total energy per observed minute as `Global_active_power * 1000 / 60` Wh. `Other_Wh` is the difference between that total and the three sub-meter readings; it is a residual, not a measured appliance category.
 
@@ -18,12 +18,15 @@ Use Python 3.10 or newer. From the repository root:
 python -m venv .venv
 # Activate .venv using your shell's normal command.
 python -m pip install -r requirements.txt
+python scripts/download_data.py
+python scripts/build_results.py
+python -m unittest discover -s tests
 jupyter lab
 ```
 
-Open [`notebooks/ClusteringAnalysis.ipynb`](notebooks/ClusteringAnalysis.ipynb) and run all cells. By default it reads `data/household_power_consumption.txt`. Set the `ENERGY_DATA_PATH` environment variable to use another location. Start Jupyter from the repository root so the notebook can import `src`.
+The download script is safe to rerun: it skips an existing data file. Use `--force` to replace it or `--output PATH` to select another location. The results script regenerates the committed CSV, JSON, and PNG files in [`results/`](results/); use `--data PATH` and `--output PATH` to override its defaults.
 
-Run the synthetic-data checks with `python -m unittest discover -s tests`.
+Open [`notebooks/ClusteringAnalysis.ipynb`](notebooks/ClusteringAnalysis.ipynb) and run all cells for the step-by-step exploration. By default it reads `data/household_power_consumption.txt`. Set the `ENERGY_DATA_PATH` environment variable to use another location. Start Jupyter from the repository root so the notebook can import `src`.
 
 ## Method and limits
 
@@ -40,6 +43,8 @@ Clustering describes patterns in this single household; it does not identify spe
 
 The full notebook ran on the downloaded UCI data: 2,075,259 rows were loaded, 2,049,280 had complete measurements, and 1,050 complete minutes had a negative calculated residual. Observed energy across the 48 calendar months represented in the data sums to 37,283.748 kWh. The first and last months are partial, and monthly coverage also reflects missing readings.
 
+![Monthly observed energy and data coverage](results/figures/monthly_energy.png)
+
 With the 5,000-row sample, seed 42, five clusters for K-Means and hierarchical clustering, and `eps=1.5` for DBSCAN:
 
 | Model | Clusters | Noise fraction | Silhouette | Davies-Bouldin |
@@ -49,6 +54,8 @@ With the 5,000-row sample, seed 42, five clusters for K-Means and hierarchical c
 | DBSCAN | 5 | 0.018 | 0.578 | 1.191 |
 
 DBSCAN's scores exclude noise points, so the scores do not rank the methods on exactly the same observations. The cluster profiles in the notebook are the basis for interpreting what each group represents.
+
+![Comparison of clusters projected into two PCA dimensions](results/figures/cluster_comparison.png)
 
 The K-Means profile gives a more concrete reading of the five groups. Percentages refer to sampled minutes, not the share of total energy:
 
@@ -62,14 +69,20 @@ The K-Means profile gives a more concrete reading of the five groups. Percentage
 
 Cluster numbers are arbitrary labels. These profiles describe measured channels rather than proving which individual appliances were running.
 
+The committed [`summary.json`](results/summary.json) records dataset counts and run parameters. [`monthly_energy.csv`](results/monthly_energy.csv), [`clustering_scores.csv`](results/clustering_scores.csv), and [`kmeans_profile.csv`](results/kmeans_profile.csv) contain the underlying tables. These are generated outputs from the source data and scripts, not a substitute for the raw dataset.
+
 ## Repository layout
 
 ```text
 data/                          Local UCI dataset (ignored by Git)
 notebooks/ClusteringAnalysis.ipynb  Guided analysis and charts
+results/                       Committed result tables and figures
+scripts/download_data.py       Download and extract the UCI dataset
+scripts/build_results.py       Regenerate tables and figures
 src/energy_analysis.py         Data loading, aggregation, and model comparison
 requirements.txt               Python dependencies
-tests/                         Synthetic-data regression checks
+tests/                         Synthetic-data and workflow checks
+.github/workflows/tests.yml     Automated synthetic-data checks
 ```
 
 Dataset citation: Hebrail, G. & Berard, A. (2006). *Individual Household Electric Power Consumption* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C58K54

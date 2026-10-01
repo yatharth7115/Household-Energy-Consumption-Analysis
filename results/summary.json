@@ -1,0 +1,13 @@
+{
+  "raw_rows": 2075259,
+  "complete_rows": 2049280,
+  "negative_residual_rows": 1050,
+  "first_timestamp": "2006-12-16T17:24:00",
+  "last_timestamp": "2010-11-26T21:02:00",
+  "calendar_months": 48,
+  "total_observed_kwh": 37283.7477,
+  "sample_size": 5000,
+  "random_state": 42,
+  "kmeans_and_hierarchical_clusters": 5,
+  "dbscan_eps": 1.5
+}
