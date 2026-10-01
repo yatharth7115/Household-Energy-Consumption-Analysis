@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171a16">
+  <meta name="description" content="An interactive, evidence-led look at 2.05 million complete household electricity readings, monthly energy use, and clustering patterns.">
+  <title>Household Energy: An Analysis by Yatharth Gupta</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to analysis</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Household Energy, back to top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>HOUSEHOLD<br>ENERGY</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#timeline">Energy</a><a href="#patterns">Patterns</a><a href="#method">Method</a>
+    </nav>
+    <a class="header-link" href="https://github.com/yatharth7115/Household-Energy-Consumption-Analysis" target="_blank" rel="noopener noreferrer">View the code <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> A data study · 2006-2010</p>
+        <h1 id="hero-title">One home.<br>Four years.<br><em>Millions of moments.</em></h1>
+        <p class="hero-intro">A minute-by-minute view of electricity use: what changed over time, where the energy went, and the patterns hidden in ordinary days.</p>
+        <div class="hero-actions"><a class="button-primary" href="#timeline">Explore the data <span aria-hidden="true">↓</span></a><a class="text-link" href="#method">How this was measured</a></div>
+      </div>
+      <div class="hero-graphic" aria-label="Decorative visualization of electricity readings">
+        <div class="orb-ring ring-one"></div><div class="orb-ring ring-two"></div><div class="orb-ring ring-three"></div>
+        <div class="orb-core"><span>37,283.7</span><small>observed kWh</small></div>
+        <div class="orb-note top-note">01 / ENERGY</div><div class="orb-note bottom-note">ONE-MINUTE READINGS</div>
+      </div>
+    </section>
+
+    <section class="stat-strip" aria-label="Dataset at a glance"><div class="wrap stat-grid">
+      <div class="stat-item"><span class="stat-index">01</span><strong>2.05<span>M</span></strong><p>complete one-minute readings</p></div>
+      <div class="stat-item"><span class="stat-index">02</span><strong>48</strong><p>calendar months represented</p></div>
+      <div class="stat-item"><span class="stat-index">03</span><strong>5,000</strong><p>readings in the clustering sample</p></div>
+      <div class="stat-item"><span class="stat-index">04</span><strong>3</strong><p>clustering methods compared</p></div>
+    </div></section>
+
+    <section class="section wrap" id="timeline" aria-labelledby="timeline-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> 01 / The timeline</p><h2 id="timeline-title">Electricity has a rhythm.</h2></div><p class="section-deck">Observed monthly energy is calculated from every complete minute. Use the year selector to trace the highs and lows; the strip below the chart shows data coverage.</p></div>
+      <div class="chart-panel">
+        <div class="panel-top"><div><span class="panel-kicker">OBSERVED ENERGY</span><p><strong id="chart-total">37,283.7</strong> <span>kWh across the dataset</span></p></div><div class="year-tabs" role="group" aria-label="Select timeline year"><button class="active" type="button" data-year="all" aria-pressed="true">All</button><button type="button" data-year="2007" aria-pressed="false">2007</button><button type="button" data-year="2008" aria-pressed="false">2008</button><button type="button" data-year="2009" aria-pressed="false">2009</button><button type="button" data-year="2010" aria-pressed="false">2010</button></div></div>
+        <div class="timeline-shell"><svg id="timeline-svg" role="img" aria-label="Line chart of observed monthly electricity consumption"></svg></div>
+        <div class="coverage-heading"><span>DATA COVERAGE</span><span>each bar = one month</span></div><div id="coverage-bars" class="coverage-bars" aria-label="Monthly coverage bars"></div>
+        <div class="chart-readout" id="chart-readout" aria-live="polite">Select a point to inspect a month.</div>
+      </div>
+      <div class="insight-row"><div><span class="insight-number">01</span><p><b>December 2007 peaked at 1,210.1 kWh.</b> It is the highest observed monthly total in this dataset.</p></div><div><span class="insight-number">02</span><p><b>Coverage changes the story.</b> December 2006 and November 2010 are partial months; a low total there is not a full-month comparison.</p></div></div>
+    </section>
+
+    <section class="section section-cream" id="composition" aria-labelledby="composition-title"><div class="wrap">
+      <div class="section-heading dark-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> 02 / Where it went</p><h2 id="composition-title">Four parts of the whole.</h2></div><p class="section-deck">Three measured sub-metering channels and a calculated remainder account for the observed energy. The remainder is not a directly measured appliance group.</p></div>
+      <div class="composition-wrap"><div class="stack-label"><span>SHARE OF OBSERVED ENERGY</span><strong>37,283.7 kWh</strong></div><div class="stacked-bar" role="img" aria-label="Energy share: sub-metering 1 6.2%, sub-metering 2 7.1%, sub-metering 3 35.5%, calculated remainder 51.2%"><span style="width:6.2%;background:#d86b47"></span><span style="width:7.1%;background:#b45b71"></span><span style="width:35.5%;background:#91aa51"></span><span style="width:51.2%;background:#252a23"></span></div><div class="meter-grid"><div><span class="meter-dot" style="background:#d86b47"></span><small>SUB-METERING 01</small><strong>2,299</strong><span>kWh · 6.2%</span></div><div><span class="meter-dot" style="background:#b45b71"></span><small>SUB-METERING 02</small><strong>2,661</strong><span>kWh · 7.1%</span></div><div><span class="meter-dot" style="background:#91aa51"></span><small>SUB-METERING 03</small><strong>13,235</strong><span>kWh · 35.5%</span></div><div><span class="meter-dot" style="background:#252a23"></span><small>CALCULATED REMAINDER</small><strong>19,088</strong><span>kWh · 51.2%</span></div></div><p class="footnote">Each reading estimates total energy as active power × 1,000 ÷ 60 Wh. The remainder subtracts all three sub-metering readings. It is negative for 1,050 complete minutes; those calculated values are retained to preserve the total.</p></div>
+    </div></section>
+
+    <section class="section wrap" id="patterns" aria-labelledby="patterns-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> 03 / Patterns in the minutes</p><h2 id="patterns-title">Three ways to find a pattern.</h2></div><p class="section-deck">K-Means, hierarchical clustering and DBSCAN each saw the same 5,000 scaled readings. The chart below projects six features into two dimensions for display only.</p></div>
+      <div class="scatter-layout"><div class="scatter-panel"><div class="scatter-top"><div><span class="panel-kicker">CLUSTER MAP</span><h3 id="scatter-title">K-Means</h3></div><div class="model-tabs" role="group" aria-label="Select clustering model"><button class="active" type="button" data-model="K-Means" aria-pressed="true">K-Means</button><button type="button" data-model="Hierarchical" aria-pressed="false">Hierarchical</button><button type="button" data-model="DBSCAN" aria-pressed="false">DBSCAN</button></div></div><div class="canvas-shell"><canvas id="scatter-canvas" aria-label="Two-dimensional PCA projection of 5,000 sampled readings colored by cluster"></canvas></div><div class="scatter-legend"><span><i style="background:#d4ec67"></i> C0</span><span><i style="background:#f39c6b"></i> C1</span><span><i style="background:#b78cdb"></i> C2</span><span><i style="background:#72c7aa"></i> C3</span><span><i style="background:#eddfae"></i> C4</span><span><i style="background:#858a80"></i> noise</span></div></div><div class="score-panel"><span class="panel-kicker">MODEL COMPARISON</span><h3>The scorecard</h3><div class="score-heading"><span>MODEL</span><span>SILHOUETTE</span><span>DAVIES-BOULDIN</span></div><div id="score-list"></div><p class="score-note">Higher silhouette and lower Davies-Bouldin generally indicate clearer separation. DBSCAN excludes its 1.82% noise readings from these scores, so it is not a like-for-like ranking.</p></div></div>
+      <div class="cluster-section"><div class="cluster-intro"><h3>Five distinct usage profiles</h3><p>K-Means groups the sampled minutes by their measured load and sub-metering behavior. Select a profile to see what distinguishes it.</p></div><div class="cluster-explorer"><div class="cluster-list" id="cluster-list" role="group" aria-label="Select a K-Means cluster"></div><div class="cluster-detail" id="cluster-detail" aria-live="polite"></div></div></div>
+    </section>
+
+    <section class="section method-section" id="method" aria-labelledby="method-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> 04 / Method &amp; perspective</p><h2 id="method-title">What the numbers mean.</h2></div><p class="section-deck">The analysis is designed to be reproducible and honest about what a single household dataset can and cannot show.</p></div><div class="method-grid"><article><span>01 / CLEAN</span><h3>Start with complete readings</h3><p>From 2,075,259 source rows, 2,049,280 have complete timestamps and measurements. Missing values are dropped rather than invented.</p></article><article><span>02 / AGGREGATE</span><h3>Count observed energy</h3><p>One-minute energy is summed into monthly kWh. The coverage strip makes partial months and missing minutes visible alongside the totals.</p></article><article><span>03 / COMPARE</span><h3>Hold the sample constant</h3><p>All three algorithms use the same seeded 5,000-row sample and six standardized features. PCA only makes the cluster map viewable.</p></article><article><span>04 / INTERPRET</span><h3>Stay within the evidence</h3><p>Clusters describe patterns, not named appliances or future demand. The five-group choice and DBSCAN radius are exploratory settings.</p></article></div><div class="source-callout"><div><span>THE SOURCE</span><h3>Reproduce the work.</h3><p>Download the UCI household power consumption dataset, run the scripts, and inspect the notebook, result tables, and tests.</p></div><div class="source-links"><a href="https://github.com/yatharth7115/Household-Energy-Consumption-Analysis" target="_blank" rel="noopener noreferrer">Project repository <span aria-hidden="true">↗</span></a><a href="https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption" target="_blank" rel="noopener noreferrer">Original UCI dataset <span aria-hidden="true">↗</span></a></div></div></div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-inner"><div><strong>HOUSEHOLD ENERGY</strong><p>An exploratory analysis by Yatharth Gupta.</p></div><p>Source: Hebrail &amp; Berard, <em>Individual Household Electric Power Consumption</em>, UCI Machine Learning Repository. Dataset licensed CC BY 4.0.</p><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
