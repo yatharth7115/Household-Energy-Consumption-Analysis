@@ -2,7 +2,7 @@
 
 An exploratory analysis of one-minute household electricity readings, followed by a comparison of K-Means, hierarchical clustering, and DBSCAN. Monthly energy charts use all complete observations; clustering uses a reproducible 5,000-row sample to keep model fitting practical.
 
-The interactive website source is in [`docs/`](docs/).
+**Explore the live analysis:** [Interactive website](https://yatharth7115.github.io/Household-Energy-Consumption-Analysis/). It shows monthly energy, data coverage, clustering comparisons, and five usage profiles. The site source is in [`docs/`](docs/).
 
 ## Data
 
