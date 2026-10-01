@@ -50,6 +50,18 @@ With the 5,000-row sample, seed 42, five clusters for K-Means and hierarchical c
 
 DBSCAN's scores exclude noise points, so the scores do not rank the methods on exactly the same observations. The cluster profiles in the notebook are the basis for interpreting what each group represents.
 
+The K-Means profile gives a more concrete reading of the five groups. Percentages refer to sampled minutes, not the share of total energy:
+
+| Cluster | Sampled minutes | Mean active power | Distinguishing pattern |
+| --- | ---: | ---: | --- |
+| 0 | 990 (19.8%) | 0.77 kW | Moderate load with relatively high reactive power |
+| 1 | 141 (2.8%) | 4.08 kW | High load with high `Sub_metering_1` (37.68 Wh/min on average) |
+| 2 | 124 (2.5%) | 3.89 kW | High load with high `Sub_metering_2` (37.60 Wh/min on average) |
+| 3 | 1,517 (30.3%) | 1.80 kW | Elevated `Sub_metering_3` (18.01 Wh/min on average) |
+| 4 | 2,228 (44.6%) | 0.43 kW | Lower readings across the sub-metering channels |
+
+Cluster numbers are arbitrary labels. These profiles describe measured channels rather than proving which individual appliances were running.
+
 ## Repository layout
 
 ```text
