@@ -59,7 +59,11 @@ def load_power_data(path: str | Path) -> tuple[pd.DataFrame, dict[str, int]]:
     readings["Other_Wh"] = readings["Total_Wh"] - readings[
         ["Sub_metering_1", "Sub_metering_2", "Sub_metering_3"]
     ].sum(axis=1)
-    stats = {"raw_rows": original_count, "complete_rows": len(readings)}
+    stats = {
+        "raw_rows": original_count,
+        "complete_rows": len(readings),
+        "negative_residual_rows": int((readings["Other_Wh"] < 0).sum()),
+    }
     return readings, stats
 
 

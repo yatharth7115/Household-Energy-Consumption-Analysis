@@ -8,6 +8,8 @@ Download **Individual Household Electric Power Consumption** from the [UCI Machi
 
 The dataset contains minute readings from December 2006 to November 2010. `Global_active_power` is in kW; sub-metering fields are in Wh per minute. The code calculates total energy per observed minute as `Global_active_power * 1000 / 60` Wh. `Other_Wh` is the difference between that total and the three sub-meter readings; it is a residual, not a measured appliance category.
 
+The residual is negative for a small number of minutes in the source data. The analysis reports their count and retains the calculated values so the components still sum to the measured total. Do not interpret a negative residual as negative appliance consumption.
+
 ## Run
 
 Use Python 3.10 or newer. From the repository root:
@@ -33,6 +35,20 @@ Run the synthetic-data checks with `python -m unittest discover -s tests`.
 6. Use PCA only for a two-dimensional illustration, not as the model input. Profile clusters in original units for interpretation.
 
 Clustering describes patterns in this single household; it does not identify specific appliances or forecast future usage. The chosen cluster count and DBSCAN radius are starting values to explore, not validated optima. A random sample supports exploratory comparison but is not a representative estimate of energy use over time.
+
+## Results on the UCI dataset
+
+The full notebook ran on the downloaded UCI data: 2,075,259 rows were loaded, 2,049,280 had complete measurements, and 1,050 complete minutes had a negative calculated residual. Observed energy across the 48 calendar months represented in the data sums to 37,283.748 kWh. The first and last months are partial, and monthly coverage also reflects missing readings.
+
+With the 5,000-row sample, seed 42, five clusters for K-Means and hierarchical clustering, and `eps=1.5` for DBSCAN:
+
+| Model | Clusters | Noise fraction | Silhouette | Davies-Bouldin |
+| --- | ---: | ---: | ---: | ---: |
+| K-Means | 5 | 0 | 0.354 | 0.944 |
+| Hierarchical | 5 | 0 | 0.329 | 1.104 |
+| DBSCAN | 5 | 0.018 | 0.578 | 1.191 |
+
+DBSCAN's scores exclude noise points, so the scores do not rank the methods on exactly the same observations. The cluster profiles in the notebook are the basis for interpreting what each group represents.
 
 ## Repository layout
 

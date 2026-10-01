@@ -34,7 +34,9 @@ class EnergyAnalysisTests(unittest.TestCase):
 
     def test_missing_minute_does_not_gain_invented_energy(self):
         readings, counts = load_power_data(self.path)
-        self.assertEqual(counts, {"raw_rows": 120, "complete_rows": 119})
+        self.assertEqual(counts["raw_rows"], 120)
+        self.assertEqual(counts["complete_rows"], 119)
+        self.assertEqual(counts["negative_residual_rows"], int((readings["Other_Wh"] < 0).sum()))
         monthly = monthly_energy(readings)
         self.assertEqual(monthly.iloc[0]["observed_minutes"], 119)
         self.assertAlmostEqual(monthly.iloc[0]["Total_kWh"], readings["Total_Wh"].sum() / 1000)
