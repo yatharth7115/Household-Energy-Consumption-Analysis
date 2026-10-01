@@ -2,6 +2,8 @@
 
 An exploratory analysis of one-minute household electricity readings, followed by a comparison of K-Means, hierarchical clustering, and DBSCAN. Monthly energy charts use all complete observations; clustering uses a reproducible 5,000-row sample to keep model fitting practical.
 
+**Explore the live analysis:** [Household Energy — interactive website](https://household-energy-analysis-yash.y63753374.chatgpt.site). It shows monthly energy and data coverage, clustering comparisons, and the five usage profiles.
+
 ## Data
 
 Download **Individual Household Electric Power Consumption** from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption) with `python scripts/download_data.py`. It extracts `household_power_consumption.txt` into `data/` at the repository root. The data is not committed to Git. UCI credits Georges Hebrail and Alice Berard and licenses the dataset under CC BY 4.0.
