@@ -1,0 +1,1 @@
+"""Household energy analysis helpers."""
